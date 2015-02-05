@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
+import java.util.HashMap;
 
 public class MainWindow extends JFrame {
 
@@ -50,9 +52,19 @@ public class MainWindow extends JFrame {
       public void actionPerformed(ActionEvent e){
         String text = input.getText();
         if(text.length() == 1 && text.matches("[a-z]")){
-          remainingGuesses--;
+          
           boolean guessFound = false;
-
+          boolean alreadyGuessed = false;
+          for(int k = 0; k < wrongGuesses.length(); k++) {
+                if(text.charAt(0) == wrongGuesses.charAt(k)){
+                    alreadyGuessed = true;
+                }
+            }
+          if(alreadyGuessed) {
+              status.setText("You already guessed that letter. " + remainingGuesses + " guesses remaining");
+            }else{
+              remainingGuesses--;
+            }
           for(int i = 0; i < word.length(); ++i){
             if(text.charAt(0) == word.charAt(i)){
               guessFound = true;
@@ -71,8 +83,10 @@ public class MainWindow extends JFrame {
           }
 
           if(!guessFound){
+
             // if the decremented value is greater than 0, show the user the number of guesses remaining
-            if(remainingGuesses >= 0){
+           if(alreadyGuessed) {
+            } else if(remainingGuesses > 0){
               status.setText("You have " + remainingGuesses + " guesses remaining");
               wrongGuesses += text + " ";
               wrong.setText("Wrong guesses so far: " + wrongGuesses);
@@ -110,7 +124,18 @@ public class MainWindow extends JFrame {
   }
 
   public static void main(String[] args){
-    new MainWindow("cat");
+    String[] wordBank = {"team", "uncle","wrinkle", "meeting", "rhythm"};
+    Random ranNum = new Random();
+    int n = ranNum.nextInt(wordBank.length);
+    HashMap<String, String> wordBankNew = new HashMap<String, String>();
+    wordBankNew.put("team", "people working together");
+    wordBankNew.put("uncle", "a family member");
+    wordBankNew.put("wrinkle", "something caused by old age and smiling");
+    wordBankNew.put("meeting", "when a bunch of people get in a room and talk");
+    wordBankNew.put("rhythm", "a musical term");
+    System.out.println(wordBankNew.get(wordBank[n]));
+    
+    new MainWindow(wordBank[n]);
   }
 
 
