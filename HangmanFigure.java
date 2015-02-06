@@ -56,17 +56,17 @@ public class HangmanFigure extends JPanel{
     }
 
     //Left arm
-    if(guesses > 6 && guesses <= 9 ){
+    if(guesses > 6){
       g.drawLine(150, 150, 110, 140);
     }
 
     //Right arm
-    if(guesses > 7 && guesses <= 9 ){
+    if(guesses > 7){
       g.drawLine(150, 150, 190, 140);
     }
 
     //Left leg
-    if(guesses > 8 && guesses <= 9 ){
+    if(guesses > 8){
       g.drawLine(150, 200, 120, 250);
     }
 

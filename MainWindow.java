@@ -31,6 +31,7 @@ public class MainWindow extends JFrame {
       visible += "_ ";
     }
 
+
     JPanel corePanel = new JPanel(); //corePanel is a new JPanel added to the center part of the JFrame
     corePanel.setLayout(new BorderLayout());
 
@@ -53,21 +54,24 @@ public class MainWindow extends JFrame {
     input.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent e){
+        System.out.println("Guesses: " + remainingGuesses);
         String text = input.getText();
         if(text.length() == 1 && text.matches("[a-z]")){
 
           boolean guessFound = false;
           boolean alreadyGuessed = false;
+
+          //Check if the letter already in the wrong guess list
           for(int k = 0; k < wrongGuesses.length(); k++) {
-                if(text.charAt(0) == wrongGuesses.charAt(k)){
-                    alreadyGuessed = true;
-                }
+            if(text.charAt(0) == wrongGuesses.charAt(k)){
+              alreadyGuessed = true;
             }
+          }
+
           if(alreadyGuessed) {
-              status.setText("You already guessed that letter. " + remainingGuesses + " guesses remaining");
-            }else{
-              remainingGuesses--;
-            }
+            status.setText("You already guessed that letter.");
+          }
+
           for(int i = 0; i < word.length(); ++i){
             if(text.charAt(0) == word.charAt(i)){
               guessFound = true;
@@ -85,19 +89,18 @@ public class MainWindow extends JFrame {
             }
           }
 
-          if(!guessFound){
-
-            // if the decremented value is greater than 0, show the user the number of guesses remaining
-           if(alreadyGuessed) {
-            } else if(remainingGuesses > 0){
+          //If it's the wrong guess
+          if(!guessFound && !alreadyGuessed){
+            remainingGuesses--;
+            wrongGuesses += text + " ";
+            wrong.setText("Wrong guesses so far: " + wrongGuesses);
+            if(remainingGuesses > 0){
               status.setText("You have " + remainingGuesses + " guesses remaining");
-              wrongGuesses += text + " ";
-              wrong.setText("Wrong guesses so far: " + wrongGuesses);
-              hf.set(); //a method in HangmanFigure to draw Hangman
             }else{
               status.setText("You lost: the word was " + word);
               input.setEnabled(false); //Disable the text box
             }
+            hf.set(); //a method in HangmanFigure to draw Hangman
           }else{
             String actualVisible = "";
             for(int i = 0; i < visible.length(); i+=2){
