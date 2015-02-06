@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import java.util.HashMap;
+import javax.swing.Timer;
 
 public class MainWindow extends JFrame {
 
@@ -16,6 +17,8 @@ public class MainWindow extends JFrame {
   private String wrongGuesses; // Represents all the wrong guesses been made so far
   private String word; // Represents the word the user is guessing
   private String visible; // Represents the string shown to the user
+  private boolean move = true;
+  Timer timer;
 
   public MainWindow(String toGuess){
     remainingGuesses = 10;
@@ -52,7 +55,7 @@ public class MainWindow extends JFrame {
       public void actionPerformed(ActionEvent e){
         String text = input.getText();
         if(text.length() == 1 && text.matches("[a-z]")){
-          
+
           boolean guessFound = false;
           boolean alreadyGuessed = false;
           for(int k = 0; k < wrongGuesses.length(); k++) {
@@ -102,6 +105,13 @@ public class MainWindow extends JFrame {
             }
 
             if(actualVisible.equals(word)){
+              timer = new Timer(40, new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                  hf.drawWinningFigure(move);
+                  move = !move;
+                }
+              });
+              timer.start();
               status.setText("Congratulations, you have won!");
               input.setEnabled(false);
             }
@@ -134,7 +144,7 @@ public class MainWindow extends JFrame {
     wordBankNew.put("meeting", "when a bunch of people get in a room and talk");
     wordBankNew.put("rhythm", "a musical term");
     System.out.println(wordBankNew.get(wordBank[n]));
-    
+
     new MainWindow(wordBank[n]);
   }
 
