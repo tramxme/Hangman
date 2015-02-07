@@ -17,7 +17,7 @@ public class HangmanFigure extends JPanel{
   public HangmanFigure(){
     super(); // calls the constructor of its parents (JPanel) to retain the functionalities of our class
     guesses = 0;
-    setPreferredSize(new Dimension(300, 300)); // Set the size of the panel
+    setPreferredSize(new Dimension(400, 400)); // Set the size of the panel
     setOpaque(true); // make everything in the background visible
   }
 

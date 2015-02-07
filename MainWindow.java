@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import java.util.HashMap;
 import javax.swing.Timer;
+import javax.swing.JButton;
 
 public class MainWindow extends JFrame {
 
@@ -20,7 +21,7 @@ public class MainWindow extends JFrame {
   private boolean move = true;
   Timer timer;
 
-  public MainWindow(String toGuess){
+  public MainWindow(String toGuess, String description){
     remainingGuesses = 10;
     wrongGuesses = "";
     word = toGuess;
@@ -34,27 +35,38 @@ public class MainWindow extends JFrame {
 
     JPanel corePanel = new JPanel(); //corePanel is a new JPanel added to the center part of the JFrame
     corePanel.setLayout(new BorderLayout());
-
+    
+    JLabel hintStatus = new JLabel("", SwingConstants.CENTER);
     JLabel status = new JLabel("You have " + remainingGuesses + " guess(es) remaining", SwingConstants.CENTER);
     JLabel wrong = new JLabel("Wrong guesses so far: " + wrongGuesses);
     JLabel visibleLabel = new JLabel(visible, SwingConstants.CENTER);
     JTextField input = new JTextField(); // Create a text field to get user's input
-
-    JPanel southPanel = new JPanel(new GridLayout(4,1)); // Represents a layout with 4 rows and 1 column, equally sized
+       
+    JButton button = new JButton("hint");
+    
+    
+    JPanel southPanel = new JPanel(new GridLayout(6,1)); // Represents a layout with 4 rows and 1 column, equally sized
     southPanel.add(status);
     southPanel.add(visibleLabel);
     southPanel.add(input);
     southPanel.add(wrong);
-
+    southPanel.add(button);
+    southPanel.add(hintStatus);
+    
     corePanel.add(southPanel, BorderLayout.SOUTH);
 
     HangmanFigure hf = new HangmanFigure();
     corePanel.add(hf, BorderLayout.CENTER);
 
+    button.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            hintStatus.setText(description);
+        }
+    });
+    
     input.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent e){
-        System.out.println("Guesses: " + remainingGuesses);
         String text = input.getText();
         if(text.length() == 1 && text.matches("[a-z]")){
 
@@ -146,9 +158,8 @@ public class MainWindow extends JFrame {
     wordBankNew.put("wrinkle", "something caused by old age and smiling");
     wordBankNew.put("meeting", "when a bunch of people get in a room and talk");
     wordBankNew.put("rhythm", "a musical term");
-    System.out.println(wordBankNew.get(wordBank[n]));
 
-    new MainWindow(wordBank[n]);
+    new MainWindow(wordBank[n], wordBankNew.get(wordBank[n]));
   }
 
 
