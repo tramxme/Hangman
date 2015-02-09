@@ -8,8 +8,6 @@ import javax.swing.UIManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//change
-
 public class HangmanFigure extends JPanel{
 
   private int guesses;
@@ -22,7 +20,7 @@ public class HangmanFigure extends JPanel{
     setPreferredSize(new Dimension(400, 400)); // Set the size of the panel
     setOpaque(true); // make everything in the background visible
   }
-
+//hi
   public void paintComponent(Graphics g){
     Color color = UIManager.getColor ( "Panel.background" );
     g.setColor(Color.BLACK);
