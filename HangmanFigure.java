@@ -8,6 +8,8 @@ import javax.swing.UIManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//change
+
 public class HangmanFigure extends JPanel{
 
   private int guesses;
