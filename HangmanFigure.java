@@ -1,3 +1,8 @@
+/*
+ * This class is to draw the hangman figure corresponding with each guess made by the user.
+ * It is called in the MainWindow class
+ */
+
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -103,6 +108,7 @@ public class HangmanFigure extends JPanel{
   public void paintNewFigure(Graphics g, boolean move){
 
     Color color = UIManager.getColor ( "Panel.background" );
+
     //Erase all the old draw
     g.setColor(color);
     g.drawLine(150, 150, 110, 140); //left arm
@@ -118,6 +124,7 @@ public class HangmanFigure extends JPanel{
     }else{
       arm_Y = 200;
     }
+
     //Draw new figure
     g.setColor(Color.BLACK);
     g.drawLine(180, 150, 180, 230);//Body
